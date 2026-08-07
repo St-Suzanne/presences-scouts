@@ -15,6 +15,18 @@ import { createUI } from "./ui.js";
 
 const ui = createUI();
 
+async function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) {
+    return;
+  }
+
+  try {
+    await navigator.serviceWorker.register("./sw.js");
+  } catch (error) {
+    console.warn("Service worker registration failed:", error);
+  }
+}
+
 function handleSectionSelection(section) {
   selectSection(section);
   ui.setSelectedSection(section);
@@ -86,5 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
     onSubmit: handleSubmit
   });
 
+  registerServiceWorker();
   loadData();
 });
