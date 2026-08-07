@@ -11,6 +11,38 @@ async function parseJsonResponse(response) {
   }
 }
 
+export function serializePayload(payload) {
+  if (payload && typeof payload === "object" && payload.postData && typeof payload.postData.contents === "string") {
+    return payload.postData.contents;
+  }
+
+  return JSON.stringify(payload ?? {});
+}
+
+async function submit(apiUrl, payload) {
+  await fetch(apiUrl, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "text/plain;charset=UTF-8"
+    },
+    body: serializePayload(payload)
+  });
+
+  return {
+    response: {
+      status: 0,
+      statusText: "No CORS",
+      type: "opaque"
+    },
+    result: {
+      status: "success",
+      count: payload.presences?.length || 0,
+      transport: "no-cors"
+    }
+  };
+}
+
 export async function fetchData(apiUrl, onRequest, onResponse) {
   onRequest(`GET ${apiUrl}`);
   onResponse("Attente de la réponse...");
@@ -27,18 +59,12 @@ export async function fetchData(apiUrl, onRequest, onResponse) {
 }
 
 export async function submitData(apiUrl, payload, onRequest, onResponse) {
-  onRequest(`POST ${apiUrl}\n\n${JSON.stringify(payload, null, 2)}`);
-  onResponse("Attente de la réponse...");
+  onRequest(`POST ${apiUrl}\n\n${serializePayload(payload)}`);
+  onResponse("Envoi des données...");
 
-  const response = await fetch(apiUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(payload)
-  });
+  const responseData = await submit(apiUrl, payload);
 
-  const result = await parseJsonResponse(response);
+  const { response, result } = responseData;
   onResponse(formatApiResponse(response, result));
 
   if (!result) {
