@@ -11,12 +11,13 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-height: 100dvh;
 }
 
 header {
   background-color: #2e7d32;
   color: white;
-  padding: 16px;
+  padding: calc(14px + env(safe-area-inset-top)) 16px 14px;
   text-align: center;
   position: sticky;
   top: 0;
@@ -32,7 +33,7 @@ header h1 {
 main {
   flex: 1;
   padding: 16px;
-  max-width: 500px;
+  max-width: 560px;
   margin: 0 auto;
   width: 100%;
 }
@@ -72,6 +73,7 @@ h2 {
   cursor: pointer;
   text-align: center;
   margin-top: 10px;
+  touch-action: manipulation;
 }
 
 .btn:active {
@@ -103,6 +105,7 @@ h2 {
 .list-item.clickable {
   cursor: pointer;
   font-weight: 500;
+  touch-action: manipulation;
 }
 
 .toggle-group {
@@ -181,10 +184,10 @@ h2 {
 
 .api-banner {
   position: sticky;
-  top: 64px;
+  top: calc(64px + env(safe-area-inset-top));
   z-index: 9;
   margin: 0 auto 16px;
-  max-width: 500px;
+  max-width: 560px;
   width: calc(100% - 32px);
   background: #0f172a;
   color: #e2e8f0;
@@ -256,4 +259,103 @@ h2 {
   word-break: break-word;
   font-size: 0.82rem;
   line-height: 1.45;
+}
+
+@media (max-width: 640px) {
+  body {
+    background-color: #eef2ef;
+  }
+
+  header {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  header h1 {
+    font-size: 1.05rem;
+  }
+
+  main {
+    padding: 12px;
+  }
+
+  .api-banner {
+    width: calc(100% - 24px);
+    margin-bottom: 12px;
+  }
+
+  .card {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  h2 {
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+
+  .btn {
+    padding: 16px 14px;
+    min-height: 48px;
+  }
+
+  .list-item {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px;
+  }
+
+  .list-item > span {
+    width: 100%;
+    font-size: 0.98rem;
+  }
+
+  .toggle-group {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+
+  .toggle-btn {
+    min-height: 44px;
+    font-size: 0.72rem;
+    padding: 10px 6px;
+  }
+
+  .badge {
+    max-width: 100%;
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .api-banner summary {
+    padding: 11px 12px;
+  }
+
+  .api-banner-content,
+  .api-banner-block {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 420px) {
+  main {
+    padding: 10px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .list-item {
+    gap: 10px;
+  }
+
+  .toggle-group {
+    grid-template-columns: 1fr;
+  }
+
+  .toggle-btn {
+    min-height: 42px;
+    font-size: 0.78rem;
+  }
 }
