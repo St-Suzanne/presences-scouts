@@ -1,0 +1,259 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f6f8;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #2e7d32;
+  color: white;
+  padding: 16px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+main {
+  flex: 1;
+  padding: 16px;
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: #1b5e20;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.btn:active {
+  background: #1b5e20;
+}
+
+.btn-secondary {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.list-item > span {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-item.clickable {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.toggle-group {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  background: #e0e0e0;
+  border-radius: 8px;
+  padding: 4px;
+  width: clamp(240px, 58vw, 320px);
+  flex: 0 0 clamp(240px, 58vw, 320px);
+}
+
+.toggle-btn {
+  padding: 8px 6px;
+  border: none;
+  background: transparent;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #666;
+  line-height: 1.1;
+  min-height: 40px;
+}
+
+.toggle-btn.present {
+  background: #4caf50;
+  color: white;
+}
+
+.toggle-btn.justified {
+  background: #f59e0b;
+  color: white;
+}
+
+.toggle-btn.unjustified {
+  background: #f44336;
+  color: white;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.badge.clickable {
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.badge.clickable:hover {
+  background: #d7ebd9;
+}
+
+.badge.clickable:active {
+  transform: translateY(1px);
+}
+
+.badge.clickable:focus-visible {
+  outline: 2px solid #1b5e20;
+  outline-offset: 2px;
+}
+
+.api-banner {
+  position: sticky;
+  top: 64px;
+  z-index: 9;
+  margin: 0 auto 16px;
+  max-width: 500px;
+  width: calc(100% - 32px);
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18);
+  overflow: hidden;
+}
+
+.api-banner summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #93c5fd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.api-banner summary::-webkit-details-marker {
+  display: none;
+}
+
+.api-banner summary::after {
+  content: "Afficher";
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #bfdbfe;
+  text-transform: none;
+}
+
+.api-banner[open] summary::after {
+  content: "Masquer";
+}
+
+.api-banner-content {
+  padding: 0 14px 14px;
+}
+
+.api-banner-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.api-banner-block {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.api-banner-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  margin-bottom: 6px;
+}
+
+.api-banner pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
