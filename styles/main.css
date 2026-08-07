@@ -182,19 +182,7 @@ h2 {
   outline-offset: 2px;
 }
 
-.api-banner {
-  position: sticky;
-  top: calc(64px + env(safe-area-inset-top));
-  z-index: 9;
-  margin: 0 auto 16px;
-  max-width: 560px;
-  width: calc(100% - 32px);
-  background: #0f172a;
-  color: #e2e8f0;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18);
-  overflow: hidden;
-}
+.api-banner { display: none !important; }
 
 .api-banner summary {
   list-style: none;

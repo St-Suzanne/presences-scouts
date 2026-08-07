@@ -48,11 +48,15 @@ export function createUI() {
   }
 
   function setApiRequest(text) {
-    elements.apiRequest.innerText = text;
+    if (elements.apiRequest) {
+      elements.apiRequest.innerText = text;
+    }
   }
 
   function setApiResponse(text) {
-    elements.apiResponse.innerText = text;
+    if (elements.apiResponse) {
+      elements.apiResponse.innerText = text;
+    }
   }
 
   function setSelectedSection(section) {
