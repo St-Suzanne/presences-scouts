@@ -153,6 +153,22 @@ h2 {
   color: #666;
 }
 
+/* Spinner */
+.spinner {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 12px auto;
+  border-radius: 50%;
+  border: 5px solid rgba(46,125,50,0.12);
+  border-top-color: #2e7d32;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .badge {
   display: inline-block;
   padding: 4px 8px;

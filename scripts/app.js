@@ -57,16 +57,21 @@ async function loadData() {
 
   try {
     const result = await fetchData(API_URL, ui.setApiRequest, ui.setApiResponse, currentPassword);
+    if (!result) {
+      showLogin("Impossible de contacter le serveur. Vérifiez l'URL de l'API ou votre connexion.");
+      return;
+    }
+
     if (result.status !== "success") {
-      // Si mot de passe invalide, forcer l'écran de connexion
-      if (result.status === "unauthorized") {
+      // Si mot de passe invalide ou message l'indique, forcer l'écran de connexion
+      if (result.status === "unauthorized" || (result.message && String(result.message).toLowerCase().includes('mot de passe'))) {
         localStorage.removeItem(STORAGE_KEY);
         currentPassword = null;
         showLogin("Mot de passe incorrect ou modifié. Veuillez vous reconnecter.");
         return;
       }
 
-      alert("Erreur lors de la récupération des données : " + (result.message || "Erreur inconnue"));
+      showLogin(result.message || "Erreur lors de la récupération des données.");
       return;
     }
 
@@ -98,6 +103,11 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     if (loginScreen) loginScreen.classList.add("active");
     document.getElementById("login-message").innerText = message || "";
+    const input = document.getElementById('login-password');
+    if (input) {
+      input.value = '';
+      setTimeout(() => input.focus(), 50);
+    }
   }
 
   function hideLogin() {
@@ -117,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showLogin();
   }
 
+
   // Login actions
   const btnLogin = document.getElementById("btn-login");
   if (btnLogin) {
@@ -133,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Essayer de charger les données avec le mot de passe saisi
       try {
         const result = await fetchData(API_URL, ui.setApiRequest, ui.setApiResponse, currentPassword);
-        if (result.status === "success") {
+        if (result && result.status === "success") {
           if (remember && remember.checked) {
             localStorage.setItem(STORAGE_KEY, currentPassword);
           }
@@ -141,10 +152,10 @@ document.addEventListener("DOMContentLoaded", () => {
           setCatalogData(result.data || {});
           ui.renderSections(getState().sections, handleSectionSelection);
           ui.showScreen("screen-sections");
-        } else if (result.status === "unauthorized") {
+        } else if (result && (result.status === "unauthorized" || (result.message && String(result.message).toLowerCase().includes('mot de passe')))) {
           showLogin("Mot de passe incorrect.");
         } else {
-          showLogin(result.message || "Erreur lors de la connexion.");
+          showLogin(result?.message || "Erreur lors de la connexion.");
         }
       } catch (err) {
         showLogin(err.message || String(err));
@@ -161,13 +172,13 @@ async function handleSubmit() {
 
   try {
     const result = await submitData(API_URL, payload, ui.setApiRequest, ui.setApiResponse);
-    if (result.status === "success") {
+    if (result && result.status === "success") {
       alert(`Présences enregistrées avec succès (${result.count} animés) !`);
       ui.showScreen("screen-sections");
       return;
     }
 
-    if (result.status === "unauthorized") {
+    if (result && (result.status === "unauthorized" || (result.message && String(result.message).toLowerCase().includes('mot de passe')))) {
       localStorage.removeItem(STORAGE_KEY);
       currentPassword = null;
       window.showLogin("Mot de passe incorrect. Veuillez vous reconnecter.");
