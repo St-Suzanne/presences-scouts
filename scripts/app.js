@@ -98,21 +98,52 @@ document.addEventListener("DOMContentLoaded", () => {
   // Gestion du mot de passe enregistré
   const saved = localStorage.getItem(STORAGE_KEY);
   const loginScreen = document.getElementById("screen-login");
+  const btnLogin = document.getElementById("btn-login");
+  const loginSpinner = document.getElementById("login-spinner");
+  const loginPasswordInput = document.getElementById("login-password");
+  const loginRememberInput = document.getElementById("login-remember");
+  const loginMessage = document.getElementById("login-message");
+
+  function setLoginLoading(isLoading) {
+    if (btnLogin) {
+      btnLogin.disabled = isLoading;
+      btnLogin.classList.toggle("is-loading", isLoading);
+      btnLogin.setAttribute("aria-busy", isLoading ? "true" : "false");
+      console.log(`Login button is now ${isLoading ? "loading" : "not loading"}`);
+    }
+
+    if (loginSpinner) {
+      loginSpinner.hidden = !isLoading;
+    }
+
+    if (loginPasswordInput) {
+      loginPasswordInput.disabled = isLoading;
+    }
+
+    if (loginRememberInput) {
+      loginRememberInput.disabled = isLoading;
+    }
+  }
 
   function showLogin(message) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     if (loginScreen) loginScreen.classList.add("active");
-    document.getElementById("login-message").innerText = message || "";
-    const input = document.getElementById('login-password');
-    if (input) {
-      input.value = '';
-      setTimeout(() => input.focus(), 50);
+    if (loginMessage) {
+      loginMessage.innerText = message || "";
+    }
+    setLoginLoading(false);
+    if (loginPasswordInput) {
+      loginPasswordInput.value = '';
+      setTimeout(() => loginPasswordInput.focus(), 50);
     }
   }
 
   function hideLogin() {
     if (loginScreen) loginScreen.classList.remove("active");
-    document.getElementById("login-message").innerText = "";
+    if (loginMessage) {
+      loginMessage.innerText = "";
+    }
+    setLoginLoading(false);
   }
 
   // Expose for use in other scopes
@@ -132,20 +163,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnLogin = document.getElementById("btn-login");
   if (btnLogin) {
     btnLogin.addEventListener("click", async () => {
-      const input = document.getElementById("login-password");
-      const remember = document.getElementById("login-remember");
-      const pwd = input ? input.value : "";
+      const pwd = loginPasswordInput ? loginPasswordInput.value : "";
       if (!pwd) {
         showLogin("Veuillez entrer le mot de passe.");
         return;
       }
 
       currentPassword = pwd;
+      setLoginLoading(true);
       // Essayer de charger les données avec le mot de passe saisi
       try {
         const result = await fetchData(API_URL, ui.setApiRequest, ui.setApiResponse, currentPassword);
         if (result && result.status === "success") {
-          if (remember && remember.checked) {
+          if (loginRememberInput && loginRememberInput.checked) {
             localStorage.setItem(STORAGE_KEY, currentPassword);
           }
           hideLogin();
@@ -159,6 +189,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } catch (err) {
         showLogin(err.message || String(err));
+      } finally {
+        setLoginLoading(false);
       }
     });
   }

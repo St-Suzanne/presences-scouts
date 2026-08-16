@@ -85,6 +85,44 @@ h2 {
   color: #333;
 }
 
+.btn-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-login.is-loading {
+  opacity: 0.92;
+  cursor: progress;
+}
+
+.btn-label {
+  display: inline-block;
+}
+
+.btn-spinner {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  animation: spin 0.8s linear infinite;
+}
+
+.btn-login.is-loading .btn-spinner {
+  display: inline-block;
+}
+
+.btn-login.is-loading .btn-label {
+  opacity: 0.92;
+}
+
+.btn-login:disabled {
+  cursor: progress;
+}
+
 .list-item {
   display: flex;
   justify-content: space-between;
@@ -198,7 +236,11 @@ h2 {
   outline-offset: 2px;
 }
 
-.api-banner { display: none !important; }
+.api-banner {
+  margin: 12px auto;
+  max-width: 960px;
+  width: calc(100% - 32px);
+}
 
 .api-banner summary {
   list-style: none;
@@ -232,19 +274,23 @@ h2 {
 }
 
 .api-banner-content {
-  padding: 0 14px 14px;
+  padding: 8px 14px 14px;
 }
 
 .api-banner-grid {
   display: grid;
   gap: 10px;
+  grid-template-columns: 1fr 1fr;
 }
 
 .api-banner-block {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
+  background: #0f172a;
+  color: #cbd5e1;
+  border-radius: 8px;
   padding: 10px 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+  font-size: 0.82rem;
+  overflow: auto;
 }
 
 .api-banner-label {
@@ -253,7 +299,7 @@ h2 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #94a3b8;
+  color: #93c5fd;
   margin-bottom: 6px;
 }
 
@@ -261,8 +307,6 @@ h2 {
   margin: 0;
   white-space: pre-wrap;
   word-break: break-word;
-  font-size: 0.82rem;
-  line-height: 1.45;
 }
 
 @media (max-width: 640px) {
