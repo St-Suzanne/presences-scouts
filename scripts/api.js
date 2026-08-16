@@ -43,11 +43,12 @@ async function submit(apiUrl, payload) {
   };
 }
 
-export async function fetchData(apiUrl, onRequest, onResponse) {
-  onRequest(`GET ${apiUrl}`);
+export async function fetchData(apiUrl, onRequest, onResponse, password) {
+  const url = password ? `${apiUrl}?password=${encodeURIComponent(password)}` : apiUrl;
+  onRequest(`GET ${url}`);
   onResponse("Attente de la réponse...");
 
-  const response = await fetch(apiUrl);
+  const response = await fetch(url);
   const result = await parseJsonResponse(response);
   onResponse(formatApiResponse(response, result));
 
