@@ -22,9 +22,7 @@ function formatMeetingDate(dateValue) {
     weekday: "long",
     day: "2-digit",
     month: "long",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit"
+    year: "numeric"
   }).format(parsedDate);
 }
 
