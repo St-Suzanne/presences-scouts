@@ -15,13 +15,11 @@ import { createUI } from "./ui.js";
 
 const ui = createUI();
 
-console.log("Presences Scouts app script loaded");
 
 const STORAGE_KEY = "ps_password";
 let currentPassword = null;
 
 async function registerServiceWorker() {
-  console.log("Enregistrement du service worker...");
   if (!("serviceWorker" in navigator)) {
     return;
   }
@@ -60,13 +58,11 @@ async function loadData() {
 
   try {
     const result = await fetchData(API_URL, ui.setApiRequest, ui.setApiResponse, currentPassword);
-    console.log("Données récupérées:", result);
 
     if (!result) {
       showLogin("Impossible de contacter le serveur. Vérifiez l'URL de l'API ou votre connexion.");
       return;
     }
-    console.log("Données récupérées:", result);
     if (result.status !== "success") {
       // Si mot de passe invalide ou message l'indique, forcer l'écran de connexion
       if (result.status === "unauthorized" || (result.message && String(result.message).toLowerCase().includes('mot de passe'))) {
@@ -124,7 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
   window.showLogin = showLogin;
   window.hideLogin = hideLogin;
 
-  console.log("Mot de passe enregistré:", saved);
 
   if (saved) {
     currentPassword = saved;
@@ -149,6 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       currentPassword = pwd;
       // Essayer de charger les données avec le mot de passe saisi
+      btnLogin.disabled = true;
+      btnLogin.classList.add("loading");
       try {
         const result = await fetchData(API_URL, ui.setApiRequest, ui.setApiResponse, currentPassword);
         if (result && result.status === "success") {
@@ -166,6 +163,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } catch (err) {
         showLogin(err.message || String(err));
+      } finally {
+        btnLogin.disabled = false;
+        btnLogin.classList.remove("loading");
       }
     });
   }
