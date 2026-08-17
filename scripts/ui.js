@@ -12,8 +12,9 @@ function createElement(tag, className, text) {
 }
 
 function formatMeetingDate(dateValue) {
-  const parsedDate = new Date(dateValue);
-
+  const cleanDate = dateValue.split("T")[0];
+  const parsedDate = new Date(cleanDate);
+  
   if (Number.isNaN(parsedDate.getTime())) {
     return dateValue;
   }
