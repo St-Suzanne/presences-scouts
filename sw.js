@@ -12,7 +12,10 @@ const APP_SHELL = [
   "./icons/app-icon.svg"
 ];
 
+console.log("Service worker script loaded");
+
 self.addEventListener("install", (event) => {
+  console.log("Service worker install event");
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
   );
@@ -20,6 +23,7 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
+  console.log("Service worker activate event");
   event.waitUntil(
     caches.keys().then((cacheNames) =>
       Promise.all(
@@ -33,6 +37,10 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  if (event.request.method === "GET") {
+    console.log("Service worker fetch:", event.request.url);
+  }
+
   if (event.request.method !== "GET") {
     return;
   }

@@ -49,6 +49,7 @@ export function createUI() {
 
   function setApiRequest(text) {
     if (elements.apiRequest) {
+      console.log("API Request:", text);
       elements.apiRequest.innerText = text;
     }
   }

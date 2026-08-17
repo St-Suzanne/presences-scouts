@@ -15,10 +15,13 @@ import { createUI } from "./ui.js";
 
 const ui = createUI();
 
+console.log("Presences Scouts app script loaded");
+
 const STORAGE_KEY = "ps_password";
 let currentPassword = null;
 
 async function registerServiceWorker() {
+  console.log("Enregistrement du service worker...");
   if (!("serviceWorker" in navigator)) {
     return;
   }
@@ -57,11 +60,13 @@ async function loadData() {
 
   try {
     const result = await fetchData(API_URL, ui.setApiRequest, ui.setApiResponse, currentPassword);
+    console.log("Données récupérées:", result);
+
     if (!result) {
       showLogin("Impossible de contacter le serveur. Vérifiez l'URL de l'API ou votre connexion.");
       return;
     }
-
+    console.log("Données récupérées:", result);
     if (result.status !== "success") {
       // Si mot de passe invalide ou message l'indique, forcer l'écran de connexion
       if (result.status === "unauthorized" || (result.message && String(result.message).toLowerCase().includes('mot de passe'))) {
@@ -98,57 +103,28 @@ document.addEventListener("DOMContentLoaded", () => {
   // Gestion du mot de passe enregistré
   const saved = localStorage.getItem(STORAGE_KEY);
   const loginScreen = document.getElementById("screen-login");
-  const btnLogin = document.getElementById("btn-login");
-  const loginSpinner = document.getElementById("login-spinner");
-  const loginPasswordInput = document.getElementById("login-password");
-  const loginRememberInput = document.getElementById("login-remember");
-  const loginMessage = document.getElementById("login-message");
-
-  function setLoginLoading(isLoading) {
-    if (btnLogin) {
-      btnLogin.disabled = isLoading;
-      btnLogin.classList.toggle("is-loading", isLoading);
-      btnLogin.setAttribute("aria-busy", isLoading ? "true" : "false");
-      console.log(`Login button is now ${isLoading ? "loading" : "not loading"}`);
-    }
-
-    if (loginSpinner) {
-      loginSpinner.hidden = !isLoading;
-    }
-
-    if (loginPasswordInput) {
-      loginPasswordInput.disabled = isLoading;
-    }
-
-    if (loginRememberInput) {
-      loginRememberInput.disabled = isLoading;
-    }
-  }
 
   function showLogin(message) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     if (loginScreen) loginScreen.classList.add("active");
-    if (loginMessage) {
-      loginMessage.innerText = message || "";
-    }
-    setLoginLoading(false);
-    if (loginPasswordInput) {
-      loginPasswordInput.value = '';
-      setTimeout(() => loginPasswordInput.focus(), 50);
+    document.getElementById("login-message").innerText = message || "";
+    const input = document.getElementById('login-password');
+    if (input) {
+      input.value = '';
+      setTimeout(() => input.focus(), 50);
     }
   }
 
   function hideLogin() {
     if (loginScreen) loginScreen.classList.remove("active");
-    if (loginMessage) {
-      loginMessage.innerText = "";
-    }
-    setLoginLoading(false);
+    document.getElementById("login-message").innerText = "";
   }
 
   // Expose for use in other scopes
   window.showLogin = showLogin;
   window.hideLogin = hideLogin;
+
+  console.log("Mot de passe enregistré:", saved);
 
   if (saved) {
     currentPassword = saved;
@@ -163,19 +139,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnLogin = document.getElementById("btn-login");
   if (btnLogin) {
     btnLogin.addEventListener("click", async () => {
-      const pwd = loginPasswordInput ? loginPasswordInput.value : "";
+      const input = document.getElementById("login-password");
+      const remember = document.getElementById("login-remember");
+      const pwd = input ? input.value : "";
       if (!pwd) {
         showLogin("Veuillez entrer le mot de passe.");
         return;
       }
 
       currentPassword = pwd;
-      setLoginLoading(true);
       // Essayer de charger les données avec le mot de passe saisi
       try {
         const result = await fetchData(API_URL, ui.setApiRequest, ui.setApiResponse, currentPassword);
         if (result && result.status === "success") {
-          if (loginRememberInput && loginRememberInput.checked) {
+          if (remember && remember.checked) {
             localStorage.setItem(STORAGE_KEY, currentPassword);
           }
           hideLogin();
@@ -189,8 +166,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } catch (err) {
         showLogin(err.message || String(err));
-      } finally {
-        setLoginLoading(false);
       }
     });
   }

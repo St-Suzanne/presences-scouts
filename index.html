@@ -19,7 +19,7 @@
     <h1 id="app-title">Prise de Présences</h1>
   </header>
 
-  <!-- Bandeau de debug (affiché pour faciliter le dépannage) -->
+  <!--
   <div class="api-banner">
     <details open>
       <summary>Debug API</summary>
@@ -37,6 +37,7 @@
       </div>
     </details>
   </div>
+  -->
 
   <main>
     <!-- Chargement initial -->
@@ -59,10 +60,7 @@
         </div>
         <p id="login-message" style="color:red;min-height:1.2em;"></p>
         <div style="margin-top:12px;">
-          <button class="btn btn-login" id="btn-login">
-            <span class="btn-label">Se connecter</span>
-            <span class="btn-spinner" id="login-spinner" aria-hidden="true"></span>
-          </button>
+          <button class="btn" id="btn-login">Se connecter</button>
         </div>
       </div>
     </div>

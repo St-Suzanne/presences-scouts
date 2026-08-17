@@ -85,44 +85,6 @@ h2 {
   color: #333;
 }
 
-.btn-login {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.btn-login.is-loading {
-  opacity: 0.92;
-  cursor: progress;
-}
-
-.btn-label {
-  display: inline-block;
-}
-
-.btn-spinner {
-  display: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.35);
-  border-top-color: #ffffff;
-  animation: spin 0.8s linear infinite;
-}
-
-.btn-login.is-loading .btn-spinner {
-  display: inline-block;
-}
-
-.btn-login.is-loading .btn-label {
-  opacity: 0.92;
-}
-
-.btn-login:disabled {
-  cursor: progress;
-}
-
 .list-item {
   display: flex;
   justify-content: space-between;
@@ -236,78 +198,6 @@ h2 {
   outline-offset: 2px;
 }
 
-.api-banner {
-  margin: 12px auto;
-  max-width: 960px;
-  width: calc(100% - 32px);
-}
-
-.api-banner summary {
-  list-style: none;
-  cursor: pointer;
-  padding: 12px 14px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #93c5fd;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.api-banner summary::-webkit-details-marker {
-  display: none;
-}
-
-.api-banner summary::after {
-  content: "Afficher";
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: #bfdbfe;
-  text-transform: none;
-}
-
-.api-banner[open] summary::after {
-  content: "Masquer";
-}
-
-.api-banner-content {
-  padding: 8px 14px 14px;
-}
-
-.api-banner-grid {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: 1fr 1fr;
-}
-
-.api-banner-block {
-  background: #0f172a;
-  color: #cbd5e1;
-  border-radius: 8px;
-  padding: 10px 12px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
-  font-size: 0.82rem;
-  overflow: auto;
-}
-
-.api-banner-label {
-  display: block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #93c5fd;
-  margin-bottom: 6px;
-}
-
-.api-banner pre {
-  margin: 0;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
 
 @media (max-width: 640px) {
   body {
@@ -325,11 +215,6 @@ h2 {
 
   main {
     padding: 12px;
-  }
-
-  .api-banner {
-    width: calc(100% - 24px);
-    margin-bottom: 12px;
   }
 
   .card {
@@ -375,14 +260,6 @@ h2 {
     line-height: 1.3;
   }
 
-  .api-banner summary {
-    padding: 11px 12px;
-  }
-
-  .api-banner-content,
-  .api-banner-block {
-    font-size: 0.8rem;
-  }
 }
 
 @media (max-width: 420px) {
