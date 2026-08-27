@@ -1,4 +1,4 @@
-const CACHE_NAME = "presences-scouts-v2";
+const CACHE_NAME = "presences-scouts-v3";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -9,7 +9,9 @@ const APP_SHELL = [
   "./scripts/constants.js",
   "./scripts/state.js",
   "./scripts/ui.js",
-  "./icons/app-icon.svg"
+  "./icons/app-icon.svg",
+  "./icons/app-icon.jpeg",
+  "./icons/app-icon-maskable.jpeg"
 ];
 
 

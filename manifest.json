@@ -17,7 +17,7 @@
         "purpose": "any"
       },
       {
-        "src": "./icons/app-icon.jpeg",
+        "src": "./icons/app-icon-maskable.jpeg",
         "sizes": "1024x1024",
         "type": "image/jpeg",
         "purpose": "maskable"
