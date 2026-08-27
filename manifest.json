@@ -12,9 +12,15 @@
     "icons": [
       {
         "src": "./icons/app-icon.jpeg",
-        "sizes": "any",
+        "sizes": "1024x1024",
         "type": "image/jpeg",
-        "purpose": "any maskable"
+        "purpose": "any"
+      },
+      {
+        "src": "./icons/app-icon.jpeg",
+        "sizes": "1024x1024",
+        "type": "image/jpeg",
+        "purpose": "maskable"
       }
     ]
   }
